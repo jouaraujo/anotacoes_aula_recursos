@@ -1,0 +1,61 @@
+---
+title: "Meu lindo segundo relatório"
+author: "Thiago Andrade"
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: architect
+    highlight: github
+---
+
+
+## Introdução
+
+Neste trabalho, vamos investigar os determinantes dos salários. Para isso, vamos considerar a base de dados `wage1` do pacote `wooldridge`.
+
+
+## Pacotes requeridos
+
+Os pacotes que vamos usar são:
+
+```{r, message=FALSE}
+library(wooldridge)
+library(knitr)
+library(AdequacyModel)
+library(tidyverse)
+```
+
+## Sobre os dados
+
+A base considerada, conta com 526 observações e 24 variáveis. Neste trabalho, vamos considerar apenas 6 vaiáveis, a saber:
+
+1. `wage`: salário por hora
+1. `educ `: anos de escolaridade formais
+1. `exper`: anos de experiência na área
+1. `nonwhite`: variável binária. 0, se branco, 1 cc.
+1. `female ` : variável binária. 0, se homem, 1 se mulher.
+1. `married`: variável binária. 0, se solteiro, 1 casado.
+
+## Tratamento dos dados
+
+Para a seleção de variáveis, vamos considerar a função `select()` do pacote `dplyr`, que, por sua vez, integra o pacote `tidyverse`.
+
+```{r}
+dados <- wage1 |> 
+         select("wage","educ","exper","nonwhite", "female", "married")
+```
+
+As dez primeiras lindas da base com as variáveis consideradas é a seguinte:
+
+```{r, echo=FALSE}
+knitr::kable(head(dados,10))
+```
+
+## Análise descritiva
+
+Com relação a variável resposta salários/hora (`wage`), temos que a média é dada por `r  round(mean(dados$wage),2) `. Com relação à dispersão, temos que o desvio padrão dos salários/hora é `r  round(sd(dados$wage),2) `. A título de variáveis explicativas, releva mencionar que as médias de anos de escolaridade e experiência são, respectivamente, `r  round(mean(dados$educ),2) ` e `r  round(mean(dados$exper),2) `. O número de mulheres na base de dados é dada por `r  sum(dados$female)`, de modo que os homens totalizam `r length(dados$female) -   sum(dados$female) `.
+
+
+
+
+
